@@ -1,11 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index.html</title>
-</head>
-<body>
-    <p>Index.html</p>
-
-</body>
+<!doctype html>
+<html>
+	<head>
+		<title>CSP Dropbox</title>
+		<script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
+		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
+		<script src="{{ url_for('static', filename='script.js') }}"></script>
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	</head>
+	<body>
+        <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
+		<script src="{{ url_for('static', filename='app-setup.js') }}"></script>
+		<h1>CSP Dropbox</h1>
+		<div id="firebase-auth-container"></div>
+		<button id="sign-out" hidden="true">Sign out</button>
+		<div id="login-info" hidden="true">
+			<h2>Login Info</h2>
+			{% if user_data %}
+                <dl>
+                    <dt>Name:</dt><dd>{{ user_data['name'] }}</dd>
+                    <dt>Email:</dt><dd>{{ user_data['email'] }}</dd>
+                    <dt>Creation Date:</dt><dd>{{ user_info['creation_date'] }}</dd>
+                    <dt>Boolean Value:</dt><dd>{{ user_info['bool_value'] }}</dd>
+                    <dt>Float Value:</dt><dd>{{ user_info['float_value'] }}</dd>
+                    <dt>Int Value:</dt><dd>{{ user_info['int_value'] }}</dd>
+                    <dt>String Value:</dt><dd>{{ user_info['string_value'] }}</dd>
+                    <dt>List Value:</dt><dd>{{ user_info['list_value'] }}</dd>
+                    <dt>Dictionary Value:</dt><dd>{{ user_info['dictionary_value'] }}</dd>
+                </dl>
+				<h2>Update Info</h2>
+				<dl>
+				<form action="/edit_user_info" method="post">
+					<dt><label for="int_update">Int update:</label></dt>
+					<dd><input type="number" value="0" name="int_update" id="int_update" /></dd>
+					<dt><label for="float_update">Float update:</label></dt>
+					<dd><input type="number" value="0.0" name="float_update", step="any" id="float_update" /></dd>
+					<dt><label for="string_update">String update:</label></dt>
+					<dd><input type="text" value="" name="string_update" id="string_update" /></dd>
+					<dt>&nbsp;</dt><dd><input type="submit" value="Update values" name="submit_button" /></dd>
+				</form>
+				</dl>
+			{% elif error_message %}
+			    <p>Error Message: {{ error_message }}</p>
+			{% endif %}
+		</div>
+	</body>
 </html>

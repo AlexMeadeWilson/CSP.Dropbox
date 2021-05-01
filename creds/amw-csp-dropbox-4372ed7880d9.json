@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "amw-csp-dropbox",
+  "private_key_id": "4372ed7880d9204a1d6bc275bd557dcba2995173",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCiXdIdeeBg3vmg\nbGi5yca7Mwws0S/bjff/JiYMoVwEPwjB4cnIW8qojwphRkiFwCb0s/+9pWsBLprf\nfUWEwQjMkRgq2g7i/E9dhDowEgROpXu9n83C3L1Wyzhppxaw3n3xJn/mcicI+Jzy\nJmFfxxqMc1pjaP3jpFKNaIb3SUlrW+27bjH2WgYTv4myfkg4tKOM3VR8IOHdaFYi\na2IQ0+1hsRFm4GOfGvO3YhubrJ8Ivvl0InIN5EtUsUZ4zrM840YQM3sajnYJSMPL\nmWlJDndsYs7BvN2S8Vav1ohc4y90oSOft38s5OcQj3OpBV71lcyZxu2XQ+Wd4RaV\nzuxAJoTDAgMBAAECggEAGAzUoDga086DZE9ajdaFANqVXZgYwik7yEfyz+Eg26Io\nnmte87YhBSm27GS4PlORkaKN6Z30hSbNmvgX0Yu0TXTagxJsrROZf+0jn1Yz3CBn\n/VUL6ea/hvkwIHo3ArjaJ9u/izdyb8I/oSCtQL4hwRcfFuWI4ezHq5mFkGCDJwso\n+my5YPqBX3NdaE64arzRVaMtmNR6v7HdsMvzWjoA0V9cmuXPkn+xHbACZ0KXkgZb\nsxmmVkLWFHhQ0n841Kn8145Y5MXN9Ab2mGpg3QuvHz1vrrrejF0nAm6vT6reX/jq\n7G+g6aRsuNgCYa11LUdQCwgFUUQi+82UfIFbQq1A+QKBgQDO7KfL7qa0M/IWxDLI\nJR6RgL+VXrC6I192FJpgmsks5wxVDwxQjoldxZex7YJmKzCTmpmKwt9PrnIKikxW\nI561wa1+lrPzKu5NNMMpLxSD7LcjHJiCcArV6X/EKxHzksz5IA5TykP0BPrzn6yF\n+8zqdduJyEkuoANxZ2zr3sLzKQKBgQDI39hZdXKsoecV7Xy6zoAPyzPnzkhOVGw7\neqx22Tp+/TQQjZ1ybbfz+YpheMNWtvoQ8r/xMqXTfa1rTLGBzCZKCgFum4sCPybT\nK0gxlgaoYcOQouzqguMJ3TKhlgl03/Y9lQvvKLwTb3SceRz2SACfumfuwGxvSh3u\nVUWDbpnCCwKBgQCfIaBpVL8fFlO27mufP+yiOUEcvhVrEIj5Zh7S7DaKMaVqRIhT\n60n4s1xVmTIPIGfbG6m47OSPgrhxIqpSFFKZtLiYAY2iFAHvngP4SBye2Ax/FB61\nMTUkDM4VLoo/p0W60Mwz4/keUDYt5T3oTBzqsniDHWQqVyROshsxyb5jAQKBgQDC\nSZ/chviveLkmQFnP5UOAAy7lGmRdPtKghPqiyWEGyqi9CfwrXWv7EnWB6WgmSzx7\ngA+enzo84OYHTlqyDF9MZXkVHmTJe4N14/sj2tP9sPGSx8MW4BnwxH3gRFpJLQXi\ncnLkkyW2Nqs3XP1iSCoyU/2Ks5st2SYyC0/829DkGQKBgQC3T3rYTRkOyNYH8WcX\nukkPjynaJXHV5kq44+7GMwKJWrD7uXmf6dqbNSWoJPYSu9GVgs/J8eZ+w0jV9b4y\nvdMQ+Mz1U+734dLJzsJFZiesomhIw/lES9tSB8EzzTHc+cz2rFUaK943RtLqel5f\n9Y9z8ZWMyL0OvYoZofQGitq46A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "amw-csp-dropbox@appspot.gserviceaccount.com",
+  "client_id": "104746661852930932187",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/amw-csp-dropbox%40appspot.gserviceaccount.com"
+}
