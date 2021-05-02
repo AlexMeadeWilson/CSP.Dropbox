@@ -1,8 +1,9 @@
-import datetime
 import google.oauth2.id_token
-from flask import Flask, render_template, request, redirect
-from google.cloud import datastore
+from flask import Flask, render_template, request, redirect, Response
 from google.auth.transport import requests
+from google.cloud import datastore, storage
+
+import local_constants
 
 app = Flask(__name__)
 datastore_client = datastore.Client()
@@ -15,74 +16,133 @@ def retrieveUserInfo(claims):
 
 def createUserInfo(claims):
 	entity_key = datastore_client.key('UserInfo', claims['email'])
-	entity = datastore.Entity(key = entity_key)
+	entity = datastore.Entity(key=entity_key)
 	entity.update({
 		'email': claims['email'],
-		'name': claims['name'],
-		'creation_date': datetime.datetime.now(),
-		'bool_value': True,
-		'float_value': 3.14,
-		'int_value': 10,
-		'string_value': 'this is a sample string',
-		'list_value': [1, 2, 3, 4],
-		'dictionary_value': {'A': 1, 'B': 2, 'C': 3}
+		'name': claims['name']
 	})
 	datastore_client.put(entity)
 
-def updateUserInfo(claims, new_string, new_int, new_float):
-	entity_key = datastore_client.key('UserInfo', claims['email'])
-	entity = datastore_client.get(entity_key)
-	entity.update({
-		'string_value': new_string,
-		'int_value': new_int,
-		'float_value': new_float
-	})
-	datastore_client.put(entity)
+def blobList(prefix):
+	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
+	return storage_client.list_blobs(local_constants.PROJECT_STORAGE_BUCKET, prefix=prefix)
 
-def fetch_times(email, limit):
-	ancestor_key = datastore_client.key('User', email)
-	query = datastore_client.query(kind='visit', ancestor=ancestor_key)
-	query.order = ['-timestamp']
-	times = query.fetch(limit=limit)
-	return times
+def addDirectory(directory_name):
+	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
+	bucket = storage_client.bucket(local_constants.PROJECT_STORAGE_BUCKET)
+	blob = bucket.blob(directory_name)
+	blob.upload_from_string('', content_type='application/x-www-form-urlencoded;charset=UTF-8')
 
+def addFile(file):
+	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
+	bucket = storage_client.bucket(local_constants.PROJECT_STORAGE_BUCKET)
+	blob = bucket.blob(file.filename)
+	blob.upload_from_file(file)
+
+def downloadBlob(filename):
+	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
+	bucket = storage_client.bucket(local_constants.PROJECT_STORAGE_BUCKET)
+	blob = bucket.blob(filename)
+	return blob.download_as_bytes()
+
+## ROUTES ##
 @app.route('/')
 def root():
 	id_token = request.cookies.get("token")
 	error_message = None
 	claims = None
+	times = None
 	user_info = None
+	file_list = []
+	directory_list = []
 
 	if id_token:
 		try:
 			claims = google.oauth2.id_token.verify_firebase_token(id_token, firebase_request_adapter)
+
 			user_info = retrieveUserInfo(claims)
 			if user_info == None:
 				createUserInfo(claims)
 				user_info = retrieveUserInfo(claims)
+
+			blob_list = blobList(None)
+			for i in blob_list:
+				if i.name[len(i.name) - 1] == '/':
+					directory_list.append(i)
+				else:
+					file_list.append(i)
+
 		except ValueError as exc:
 			error_message = str(exc)
 
-	return render_template('index.html', user_data=claims, error_message=error_message, user_info=user_info)
+	return render_template('index.html', user_data=claims, error_message=error_message, user_info=user_info,
+						   file_list=file_list, directory_list=directory_list)
 
-@app.route('/edit_user_info', methods=['POST'])
-def editUserInfo():
+@app.route('/add_directory', methods=['POST'])
+def addDirectoryHandler():
 	id_token = request.cookies.get("token")
 	error_message = None
 	claims = None
+	times = None
 	user_info = None
+
 	if id_token:
 		try:
 			claims = google.oauth2.id_token.verify_firebase_token(id_token, firebase_request_adapter)
-			new_string = request.form['string_update']
-			new_int = request.form['int_update']
-			new_float = request.form['float_update']
-			updateUserInfo(claims, new_string, new_int, new_float)
+
+			directory_name = request.form['dir_name']
+			if directory_name == '' or directory_name[len(directory_name) - 1] != '/':
+				return redirect('/')
+
+			user_info = retrieveUserInfo(claims)
+			addDirectory(directory_name)
 
 		except ValueError as exc:
 			error_message = str(exc)
 
-	return redirect("/")
+	return redirect('/')
+
+@app.route('/upload_file', methods=['POST'])
+def uploadFileHandler():
+	id_token = request.cookies.get("token")
+	error_message = None
+	claims = None
+	times = None
+	user_info = None
+
+	if id_token:
+		try:
+			claims = google.oauth2.id_token.verify_firebase_token(id_token, firebase_request_adapter)
+
+			file = request.files['file_name']
+			if file.filename == '':
+				return redirect('/')
+
+			user_info = retrieveUserInfo(claims)
+			addFile(file)
+
+		except ValueError as exc:
+			error_message = str(exc)
+
+	return redirect('/')
+
+@app.route('/download_file/<string:filename>', methods=['POST'])
+def downloadFile(filename):
+	id_token = request.cookies.get("token")
+	error_message = None
+	claims = None
+	times = None
+	user_info = None
+	file_bytes = None
+
+	if id_token:
+		try:
+			claims = google.oauth2.id_token.verify_firebase_token(id_token, firebase_request_adapter)
+
+		except ValueError as exc:
+			error_message = str(exc)
+
+	return Response(downloadBlob(filename), mimetype='application/octet-stream')
 
 if __name__ == '__main__':
 	app.run(host='127.0.0.1', port=8080, debug=True)

@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>CSP Dropbox</title>
+		<link rel="icon" href="#" type="image/x-icon" sizes="16x16">
 		<script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
 		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
 		<script src="{{ url_for('static', filename='script.js') }}"></script>
@@ -11,7 +12,7 @@
         <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
 		<script src="{{ url_for('static', filename='app-setup.js') }}"></script>
-		<h1>CSP Dropbox</h1>
+		<h1>Welcome to CSP Dropbox</h1>
 		<div id="firebase-auth-container"></div>
 		<button id="sign-out" hidden="true">Sign out</button>
 		<div id="login-info" hidden="true">
@@ -20,26 +21,41 @@
                 <dl>
                     <dt>Name:</dt><dd>{{ user_data['name'] }}</dd>
                     <dt>Email:</dt><dd>{{ user_data['email'] }}</dd>
-                    <dt>Creation Date:</dt><dd>{{ user_info['creation_date'] }}</dd>
-                    <dt>Boolean Value:</dt><dd>{{ user_info['bool_value'] }}</dd>
-                    <dt>Float Value:</dt><dd>{{ user_info['float_value'] }}</dd>
-                    <dt>Int Value:</dt><dd>{{ user_info['int_value'] }}</dd>
-                    <dt>String Value:</dt><dd>{{ user_info['string_value'] }}</dd>
-                    <dt>List Value:</dt><dd>{{ user_info['list_value'] }}</dd>
-                    <dt>Dictionary Value:</dt><dd>{{ user_info['dictionary_value'] }}</dd>
                 </dl>
-				<h2>Update Info</h2>
-				<dl>
-				<form action="/edit_user_info" method="post">
-					<dt><label for="int_update">Int update:</label></dt>
-					<dd><input type="number" value="0" name="int_update" id="int_update" /></dd>
-					<dt><label for="float_update">Float update:</label></dt>
-					<dd><input type="number" value="0.0" name="float_update", step="any" id="float_update" /></dd>
-					<dt><label for="string_update">String update:</label></dt>
-					<dd><input type="text" value="" name="string_update" id="string_update" /></dd>
-					<dt>&nbsp;</dt><dd><input type="submit" value="Update values" name="submit_button" /></dd>
+
+				<h3>Add Directory</h3>
+				<form action="/add_directory" method="post">
+					<dl>
+						<dt><label for="dir_name">Directory Name:</label></dt>
+						<dd><input type="text" name="dir_name" id="dir_name" /></dd>
+						<dt>&nbsp</dt><dd><input type="submit" value="Add Directory" name="button" /></dd>
+					</dl>
 				</form>
-				</dl>
+				<br />
+				<form action="/upload_file" method="post" enctype="multipart/form-data">
+					<dl>
+						<dt><label for="file_name">Upload File:</label></dt>
+						<dd><input type="file" name="file_name" id="file_name" /></dd>
+						<dt>&nbsp</dt><dd><input type="submit" value="Upload File" name="button" /></dd>
+					</dl>
+				</form>
+				<br />
+				<h3>List of Directories</h3>
+				{% for i in directory_list %}
+					<dl>
+						<dt>Name:</dt><dd>{{ i.name }}</dd>
+					</dl>
+				{% endfor %}
+				<br />
+				<h3>List of Files</h3>
+				{% for i in file_list %}
+					<form action="/download_file/{{ i.name }}" method="post">
+						<dl>
+							<dt>File Name:</dt><dd>{{ i.name }}</dd>
+							<dt>&nbsp</dt><dd><input type="submit" value="Download" name="button" /></dd>
+						</dl>
+					</form>
+				{% endfor %}
 			{% elif error_message %}
 			    <p>Error Message: {{ error_message }}</p>
 			{% endif %}
