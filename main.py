@@ -39,6 +39,15 @@ def addFile(file):
 	blob = bucket.blob(file.filename)
 	blob.upload_from_file(file)
 
+def deleteFile(file):
+	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
+	bucket = storage_client.bucket(local_constants.PROJECT_STORAGE_BUCKET)
+	blob = bucket.blob(file)
+	try:
+		blob.delete()
+	except ValueError as exc:
+		error_message = str(exc)
+
 def downloadBlob(filename):
 	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
 	bucket = storage_client.bucket(local_constants.PROJECT_STORAGE_BUCKET)
@@ -107,7 +116,6 @@ def uploadFileHandler():
 	id_token = request.cookies.get("token")
 	error_message = None
 	claims = None
-	times = None
 	user_info = None
 
 	if id_token:
@@ -126,12 +134,11 @@ def uploadFileHandler():
 
 	return redirect('/')
 
-@app.route('/download_file/<string:filename>', methods=['POST'])
-def downloadFile(filename):
+@app.route('/download_file/<path:path>', methods=['POST'])
+def downloadFile(path):
 	id_token = request.cookies.get("token")
 	error_message = None
 	claims = None
-	times = None
 	user_info = None
 	file_bytes = None
 
@@ -142,7 +149,26 @@ def downloadFile(filename):
 		except ValueError as exc:
 			error_message = str(exc)
 
-	return Response(downloadBlob(filename), mimetype='application/octet-stream')
+	return Response(downloadBlob(path), mimetype='application/octet-stream')
+
+@app.route('/delete_file/<path:path>', methods=['POST'])
+def deleteFileHandler(path):
+	id_token = request.cookies.get("token")
+	error_message = None
+	claims = None
+	user_info = None
+	file_bytes = None
+
+	if id_token:
+		try:
+			claims = google.oauth2.id_token.verify_firebase_token(id_token, firebase_request_adapter)
+			deleteFile(path)
+
+		except ValueError as exc:
+			error_message = str(exc)
+
+	return redirect('/')
+
 
 if __name__ == '__main__':
 	app.run(host='127.0.0.1', port=8080, debug=True)

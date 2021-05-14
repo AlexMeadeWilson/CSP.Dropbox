@@ -7,6 +7,7 @@
 		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
 		<script src="{{ url_for('static', filename='script.js') }}"></script>
 		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 	</head>
 	<body>
         <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
@@ -47,15 +48,61 @@
 					</dl>
 				{% endfor %}
 				<br />
-				<h3>List of Files</h3>
-				{% for i in file_list %}
-					<form action="/download_file/{{ i.name }}" method="post">
-						<dl>
-							<dt>File Name:</dt><dd>{{ i.name }}</dd>
-							<dt>&nbsp</dt><dd><input type="submit" value="Download" name="button" /></dd>
-						</dl>
-					</form>
-				{% endfor %}
+
+				<!-- List of Files with Delete as a Table -->
+				<h3>List of Files (Table) with Download and Delete</h3>
+				<style>
+					table{
+						margin: 0 auto;
+						border: 1px solid #000000;
+					}
+					th, tr, td{
+						padding: 5px;
+						border: 1px solid #000000;
+					}
+				</style>
+				<table>
+					<thead>
+						<tr>
+							<th>Icon</th>
+							<th>Test</th>
+							<th>Name</th>
+							<th>Size</th>
+							<th>Last Updated</th>
+							<th>Download</th>
+							<th>Share</th>
+							<th>Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for i in file_list %}
+						<tr>
+							<td><i class="fas fa-folder fa-2x" title="File"></i></td> <!-- Icon -->
+							<td>{{ i.content_type }}</td> <!-- Content Type -->
+							<td>{{ i.name }}</td> <!-- Name -->
+							<td>{{ i.size }} KB</td> <!-- Size -->
+							<td>{{ i.updated.strftime("%d %B %Y, %H:%M") }}</td> <!-- Created -->
+							<td> <!-- Download -->
+								<form action="/download_file/{{ i.name }}" method="post">
+									<input type="submit" value="Download" name="button" />
+								</form>
+							</td>
+							<td> <!-- Share -->
+								<form>
+									<input type="submit" value="Share" name="button" />
+								</form>
+							</td>
+							<td> <!-- Delete -->
+								<form action="/delete_file/{{ i.name }}" method="post">
+									<input type="submit" value="Delete" name="button" />
+								</form>
+							</td>
+						</tr>
+
+						{% endfor %}
+					</tbody>
+				</table>
+
 			{% elif error_message %}
 			    <p>Error Message: {{ error_message }}</p>
 			{% endif %}
