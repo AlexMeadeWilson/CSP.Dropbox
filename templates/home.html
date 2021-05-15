@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+    <link rel="manifest" href="../site.webmanifest">
+    <link rel="mask-icon" href="../safari-pinned-tab.svg" color="#f8b739">
+    <meta name="msapplication-TileColor" content="#f8b739">
+    <meta name="theme-color" content="#f8b739">
+    <title>Sunset Storage</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="../css/style_sidebar.css">
+  </head>
+  <body>	
+    <div class="wrapper d-flex align-items-stretch">
+
+      <!-- Sidebar Navigation -->
+      <nav id="sidebar">
+        <div class="p-4 pt-5">
+          <h3 style="color: #f8b739; text-align: center;">Sunset Storage</h3>
+          <a href="home.html" class="img logo rounded-circle mb-5" style="background-image: url(../images/sunset_storage_logo.png); background-color: #f8b739;"></a>
+          <p style="text-align: center; margin-top: -2rem;">User Full Name<br />user.email@address.com<br /></p>
+          <ul class="list-unstyled components mb-5">
+            <li class="active"><a href="home.html">Home</a></li>
+	          <li>
+              <a href="#allFilesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">All Directories</a>
+              <ul class="collapse list-unstyled" id="allFilesSubmenu">
+                <li><a href="#">Directory 1</a></li>
+                <li><a href="#">Directory 2</a></li>
+                <li><a href="#">Directory 3</a></li>
+              </ul>
+            </li>
+            <li><a href="#">About</a></li>
+	          <li><a href="#">Log Out</a></li>
+          </ul>
+          <div class="footer">
+            <p>
+              <span style="color: #f8b739">Student Name:</span> Alex Meade Wilson<br />
+              <span style="color: #f8b739">Student Number:</span> 2950871<br />
+              <span style="color: #f8b739">Module:</span> Cloud Services & Platforms<br />
+              <span style="color: #f8b739">Module Code:</span> BSCH-CSP/Dub/PT<br />
+              <span style="color: #f8b739">Assignment:</span> "Dropbox" with GAE<br />
+              <span style="color: #f8b739">Date:</span> 21st May 2021
+            </p>
+            <p style="padding-top: 10rem;">Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved
+              <br /><a href="https://moodle.griffith.ie/user/profile.php?id=3415" target="_blank">Alex Meade Wilson.</a>
+            </p>
+          </div>
+        </div>
+      </nav>
+      
+      <!-- Page Content  -->
+      <div id="content" class="p-4 p-md-5">
+
+        <!-- Top Bar Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+              <i class="fa fa-bars"></i>
+              <span class="sr-only">Toggle Menu</span>
+            </button>
+            <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <i class="fa fa-bars"></i>
+            </button>&nbsp;
+            <!-- <h1> Sunset Storage </h1> -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Portfolio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Log Out</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Main Page Content -->
+        <h2 class="mb-4">This_Directory_Name File List</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        
+        <!-- Table (from https://codepen.io/cristinaconacel/pen/zmgmxE) -->
+        <div class="container" style="padding: 0rem; float: left;">
+          <div class="row">
+            <div class="col-12">
+              <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                  <!-- Button Row -->
+                  <tr>
+                    <td style="color: #f8b739;"><i class="fas fa-folder-open fa-3x" title="Directory"></i></td>
+                    <td colspan="5">
+                      <!-- Add New Directory Form -->
+                      <form class="form-inline" style="float: left;">
+                        <div class="form-group mb-2">
+                          <label for="addNewDirectoryLabel" class="sr-only">Add New Directory</label>
+                          <input type="text" readonly class="form-control-plaintext" style="text-align: right;" id="addNewDirectoryLabel" value="This_Directory_Name/">
+                        </div>
+                        <div class="form-group mx-sm-3 mb-2">
+                          <label for="addNewDirectory" class="sr-only">Create New Directory Label</label>
+                          <input type="password" class="form-control" id="inputPassword2" placeholder="Create_Sub_Directory/">
+                        </div>
+                        <button type="submit" class="btn btn-secondary mb-2">Create</button>&nbsp;
+                        
+                      </form>
+                    </td>
+                    <td><button type="button" class="btn btn-primary mb-2">Upload</button></td>
+                  </tr>
+                  <!-- Directory Table Header -->
+                  <tr>
+                    <!-- <th scope="col">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCheckAll">
+                        <label class="custom-control-label" for="customCheckAll"></label>
+                    </div>
+                    </th> -->
+                    <th scope="col">Type</i></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Created</th>
+                    <th scope="col">Download</th>
+                    <th scope="col">Share</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <!-- <td>
+                      <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="customCheck1">
+                          <label class="custom-control-label" for="customCheck1"></label>
+                      </div>
+                    </td> -->
+                    <td><i class="fas fa-folder fa-2x" title="Directory"></i></td>
+                    <td>Sub-Directory Name</td>
+                    <td>1,234 KB</td>
+                    <td>22/05/1981 11:05</td>
+                    <td><i class="fas fa-folder-open fa-2x" title="Download"></i></td>
+                    <td><i class="fas fa-file-export fa-2x" title="Share"></i></td>
+                    <td><i class="fas fa-trash fa-2x" title="Delete"></i></td>
+                  </tr>
+                  <tr>
+                    <!-- <td>
+                      <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="customCheck2">
+                          <label class="custom-control-label" for="customCheck2"></label>
+                      </div>
+                    </td> -->
+                    <td><i class="fas fa-file-image fa-2x" title="Image"></i></td>
+                    <td>Image File</td>
+                    <td>234 KB</td>
+                    <td>22/05/1981 11:05</td>
+                    <td><i class="fas fa-file-download fa-2x" title="Download"></i></td>
+                    <td><i class="fas fa-file-export fa-2x" title="Share"></i></td>
+                    <td><i class="fas fa-trash fa-2x" title="Delete"></i></td>
+                  </tr>
+                  <tr>
+                    <!-- <td>
+                      <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="customCheck3">
+                          <label class="custom-control-label" for="customCheck3"></label>
+                      </div>
+                    </td> -->
+                    <td><i class="fas fa-file-pdf fa-2x" title="PDF"></i></td>
+                    <td>Portable Document Format</td>
+                    <td>234 KB</td>
+                    <td>22/05/1981 11:05</td>
+                    <td><i class="fas fa-file-download fa-2x" title="Download"></i></td>
+                    <td><i class="fas fa-file-export fa-2x" title="Share"></i></td>
+                    <td><i class="fas fa-trash fa-2x" title="Delete"></i></td>
+                  </tr>
+                  
+                  <tr>
+                    <!-- <td>
+                      <div class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" id="customCheck4">
+                          <label class="custom-control-label" for="customCheck4"></label>
+                      </div>
+                    </td> -->
+                    <td><i class="fas fa-file-video fa-2x" title="Video"></i></td>
+                    <td>Video File</td>
+                    <td>1,234 KB</td>
+                    <td>22/05/1981 11:05</td>
+                    <td><i class="fas fa-file-download fa-2x" title="Download"></i></td>
+                    <td><i class="fas fa-file-export fa-2x" title="Share"></i></td>
+                    <td><i class="fas fa-trash fa-2x" title="Delete"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      
+      </div>
+		</div>
+    
+    <!-- Page Scripts -->
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/popper.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main_sidebar.js"></script>
+  </body>
+</html>
