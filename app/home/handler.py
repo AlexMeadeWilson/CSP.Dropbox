@@ -24,12 +24,13 @@ def blobList(prefix):
 
 def home():
     user = validateAuth()
+    file_list = []
+    directory_list = []
+
     if user is None:
         return redirect('/login')
 
     try:
-        file_list = []
-        directory_list = []
         blob_list = blobList(None)
         for i in blob_list:
             if i.name[len(i.name) - 1] == '/':
@@ -40,4 +41,4 @@ def home():
     except ValueError as exc:
         flash('Error: ', str(exc))
 
-    return render_template('home.html', user=user, file_list=file_list, directory_list=directory_list)
+    return render_template('home.html', user=user)

@@ -6,7 +6,6 @@ window.addEventListener('load', function() {
 	}
 
 	var uiConfig = {
-		// If sign in is successful, route to the /home route.
 		signInSuccessUrl: '/home',
 		signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID, firebase.auth.EmailAuthProvider.PROVIDER_ID]
 	}; // uiConfig

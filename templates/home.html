@@ -30,8 +30,12 @@
       <nav id="sidebar">
         <div class="p-4 pt-5">
           <h3 style="color: #f8b739; text-align: center;">Sunset Storage</h3>
-          <a href="/home" class="img logo rounded-circle mb-5" id="avatar"></a>
-          <p style="text-align: center; margin-top: -2rem;">User Full Name<br />user.email@address.com<br /></p>
+          {% if user %}
+          <a href="/home" class="img logo rounded-circle mb-5" id="avatar">{Avatar here}</a>
+          <p style="text-align: center; margin-top: -2rem;">{{ user['name'] }}<br />{{ user['email'] }}<br /></p>
+          {% elif error_message %}
+            <p>Error Message: {{ error_message }}</p>
+          {% endif %}
           <ul class="list-unstyled components mb-5">
             <li class="active"><a href="home.html">Home</a></li>
 	          <li>
@@ -45,18 +49,6 @@
             <li><a href="#">About</a></li>
 	          <li><a href="#">Log Out</a></li>
           </ul>
-          <div id="login-info">
-                  <h2>Login Info</h2>
-                    {% if user %}
-                      <dl>
-                        <dt>Name:</dt><dd>{{ user['name'] }}</dd>
-                        <dt>Email:</dt><dd>{{ user['email'] }}</dd>
-                        <dt>Avatar:</dt><dd>{{ user['picture'] }}</dd>
-                      </dl>
-                    {% elif error_message %}
-                      <p>Error Message: {{ error_message }}</p>
-                    {% endif %}
-                </div>
           <div class="footer">
             <p>
               <span style="color: #f8b739">Student Name:</span> Alex Meade Wilson<br />

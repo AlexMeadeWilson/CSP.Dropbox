@@ -53,10 +53,10 @@
                 <button id="sign-out" hidden="true">Sign out</button>
                 <div id="login-info" hidden="true">
                   <h2>Login Info</h2>
-                    {% if user_data %}
+                    {% if user %}
                       <dl>
-                        <dt>Name:</dt><dd>{{ user_data['name'] }}</dd>
-                        <dt>Email:</dt><dd>{{ user_data['email'] }}</dd>
+                        <dt>Name:</dt><dd>{{ user['name'] }}</dd>
+                        <dt>Email:</dt><dd>{{ user['email'] }}</dd>
                       </dl>
                     {% elif error_message %}
                       <p>Error Message: {{ error_message }}</p>
