@@ -12,10 +12,11 @@ from app.login.auth_validator import validateAuth
 
 def setRoutes(app):
     app.route('/', methods=['GET'])(home)
+    app.route('/home', methods=['GET'])(home)
 
 def home():
     user = validateAuth()
     if user is None:
         return redirect('/login')
 
-    return render_template('home.html')
+    return render_template('home.html', user=user)

@@ -41,7 +41,9 @@ def validateAuth():
                 createUserInfo(claims)
                 user_info = retrieveUserInfo(claims)
 
+            return user_info
+
         except ValueError as exc:
-            flash('Error: ', str(exec))
+            flash('Error: ', str(exc))
             error_message = str(exc)
             return None

@@ -11,14 +11,12 @@ import local_constants
 import app.login.handler as login
 import app.home.handler as home
 
-
 app = Flask(__name__)
 datastore_client = datastore.Client()
 firebase_request_adapter = requests.Request()
 
 login.setRoutes(app)
 home.setRoutes(app)
-
 
 @app.route('/404', methods=['GET'])
 def not_found():

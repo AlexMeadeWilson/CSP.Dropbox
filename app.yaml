@@ -14,6 +14,9 @@ handlers:
   - url: /file_shared
     script: file_shared.app
 
+  - url: /home
+    script: home.app
+
   - url: /login
     script: login.app
 
