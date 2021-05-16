@@ -8,19 +8,24 @@ from flask import Flask, render_template, request, redirect, Response
 from google.auth.transport import requests
 from google.cloud import datastore, storage
 import local_constants
-import app.login.handler as login
-import app.home.handler as home
+import app.login.handler as loginHandler
+import app.home.handler as homeHandler
+import app.directory.handler as directoryHandler
+import app.file.handler as fileHandler
+import app.file_shared.handler as file_sharedHandler
+import app.error.handler as errorHandler
 
 app = Flask(__name__)
 datastore_client = datastore.Client()
 firebase_request_adapter = requests.Request()
 
-login.setRoutes(app)
-home.setRoutes(app)
-
-@app.route('/404', methods=['GET'])
-def not_found():
-	return render_template('404.html')
+# Set the Routes for each Handler used throughout the entire Application
+loginHandler.setRoutes(app)
+homeHandler.setRoutes(app)
+directoryHandler.setRoutes(app)
+fileHandler.setRoutes(app)
+file_sharedHandler.setRoutes(app)
+errorHandler.setRoutes(app)
 
 if __name__ == '__main__':
 	app.run(host='127.0.0.1', port=8080, debug=True)

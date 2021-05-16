@@ -11,7 +11,7 @@ import local_constants
 from app.login.auth_validator import validateAuth
 
 def setRoutes(app):
-	app.route('/shared_file', methods=['POST'])(shared_files)
+    app.route('/404', methods=['GET'])(not_found)
 
-def shared_files():
-    return None
+def not_found():
+	return render_template('404.html')

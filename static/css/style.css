@@ -3,7 +3,7 @@ body {
 	text-align: center;
 }
 
-#avatar{
+.avatar{
   background-image: url(../images/sunset_storage_logo.png);
   background-color: #f8b739;
 }
