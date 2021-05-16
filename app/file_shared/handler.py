@@ -14,4 +14,8 @@ def setRoutes(app):
 	app.route('/shared_file', methods=['POST'])(shared_files)
 
 def shared_files():
+    user = validateAuth()
+    if user is None:
+        return redirect('/login')
+
     return None

@@ -4,7 +4,7 @@
 # Programming Assignment: Dropbox using GAE
 # ----------------------------------------------
 import google.oauth2.id_token
-from flask import Flask, render_template, request, redirect, Response
+from flask import Flask, render_template, request, redirect, Response, flash
 from google.auth.transport import requests
 from google.cloud import datastore, storage
 import local_constants
@@ -23,14 +23,13 @@ def addDirectoryHandler():
 	user = validateAuth()
 	if user is None:
 		return redirect('/login')
-	else:
-		try:
-			directory_name = request.form['dir_name']
-			if directory_name == '' or directory_name[len(directory_name) - 1] != '/':
-				return redirect('/')
-			addDirectory(directory_name)
+	try:
+		directory_name = request.form['dir_name']
+		if directory_name == '' or directory_name[len(directory_name) - 1] != '/':
+			return redirect('/')
+		addDirectory(directory_name)
 
-		except ValueError as exc:
-			error_message = str(exc)
+	except ValueError as exc:
+		flash('Error: ', str(exc))
 
 	return redirect('/')

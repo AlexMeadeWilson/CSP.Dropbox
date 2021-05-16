@@ -40,10 +40,8 @@ def validateAuth():
             if user_info == None:
                 createUserInfo(claims)
                 user_info = retrieveUserInfo(claims)
-
-            return user_info
+                return user_info
 
         except ValueError as exc:
             flash('Error: ', str(exc))
-            error_message = str(exc)
             return None

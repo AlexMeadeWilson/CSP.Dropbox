@@ -4,7 +4,7 @@
 # Programming Assignment: Dropbox using GAE
 # ----------------------------------------------
 import google.oauth2.id_token
-from flask import Flask, render_template, request, redirect, Response
+from flask import Flask, render_template, request, redirect, Response, flash
 from google.auth.transport import requests
 from google.cloud import datastore, storage
 import local_constants
@@ -28,7 +28,7 @@ def deleteFile(file):
 	try:
 		blob.delete()
 	except ValueError as exc:
-		error_message = str(exc)
+		flash('Error: ', str(exc))
 
 def downloadBlob(filename):
 	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
@@ -41,14 +41,13 @@ def uploadFileHandler():
 	user = validateAuth()
 	if user is None:
 		return redirect('/login')
-	else:
-		try:
-			file = request.files['file_name']
-			if file.filename == '':
-				return redirect('/')
-			addFile(file)
-		except ValueError as exc:
-			error_message = str(exc)
+	try:
+		file = request.files['file_name']
+		if file.filename == '':
+			return redirect('/')
+		addFile(file)
+	except ValueError as exc:
+		flash('Error: ', str(exc))
 	return redirect('/')
 
 def downloadFile(path):
@@ -66,6 +65,6 @@ def deleteFileHandler(path):
 		try:
 			deleteFile(path)
 		except ValueError as exc:
-			error_message = str(exc)
+			flash('Error: ', str(exc))
 
 	return redirect('/')
