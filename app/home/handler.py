@@ -8,21 +8,14 @@ from flask import Flask, render_template, request, redirect, Response
 from google.auth.transport import requests
 from google.cloud import datastore, storage
 import local_constants
-import app.login.handler as login
-import app.home.handler as home
+from app.login.auth_validator import validateAuth
 
+def setRoutes(app):
+    app.route('/', methods=['GET'])(home)
 
-app = Flask(__name__)
-datastore_client = datastore.Client()
-firebase_request_adapter = requests.Request()
+def home():
+    user = validateAuth()
+    if user is None:
+        return redirect('/login')
 
-login.setRoutes(app)
-home.setRoutes(app)
-
-
-@app.route('/404', methods=['GET'])
-def not_found():
-	return render_template('404.html')
-
-if __name__ == '__main__':
-	app.run(host='127.0.0.1', port=8080, debug=True)
+    return render_template('home.html')

@@ -1,7 +1,28 @@
+# ----------------------------------------------
+# BSCH-CSP/Dub/PT: Cloud Services and Platforms
+# Student: Alex Meade Wilson (2950871)
+# Programming Assignment: Dropbox using GAE
+# ----------------------------------------------
 runtime: python39
 handlers:
-  - url: /static
+  - url: /directory
+    script: directory.app
+
+  - url: /file
+    script: file.app
+
+  - url: /file_shared
+    script: file_shared.app
+
+  - url: /login
+    script: login.app
+
+  - url: /user
+    script: user.app
+
+  - url : /static
     static_dir : static
-  
+
   - url : /.*
     script : auto
+
