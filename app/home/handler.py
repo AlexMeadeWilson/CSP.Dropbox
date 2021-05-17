@@ -41,4 +41,4 @@ def home():
     except ValueError as exc:
         flash('Error: ', str(exc))
 
-    return render_template('home.html', user=user)
+    return render_template('home.html', user=user, directory_list=directory_list, file_list=file_list)

@@ -12,7 +12,8 @@ from app.login.auth_validator import validateAuth
 
 def setRoutes(app):
 	app.route('/upload_file', methods=['POST'])(uploadFileHandler)
-	app.route('/download_file/<path:path>', methods=['POST'])(downloadFile)
+	app.route('/download_file/<path:path>', methods=['POST'])(downloadFileHandler)
+	app.route('/share_file/<path:path>', methods=['POST'])(shareFileHandler)
 	app.route('/delete_file/<path:path>', methods=['POST'])(deleteFileHandler)
 
 def addFile(file):
@@ -20,6 +21,12 @@ def addFile(file):
 	bucket = storage_client.bucket(local_constants.PROJECT_STORAGE_BUCKET)
 	blob = bucket.blob(file.filename)
 	blob.upload_from_file(file)
+
+def downloadBlob(filename):
+	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
+	bucket = storage_client.bucket(local_constants.PROJECT_STORAGE_BUCKET)
+	blob = bucket.blob(filename)
+	return blob.download_as_bytes()
 
 def deleteFile(file):
 	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
@@ -30,11 +37,8 @@ def deleteFile(file):
 	except ValueError as exc:
 		flash('Error: ', str(exc))
 
-def downloadBlob(filename):
-	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
-	bucket = storage_client.bucket(local_constants.PROJECT_STORAGE_BUCKET)
-	blob = bucket.blob(filename)
-	return blob.download_as_bytes()
+def shareFile(file):
+	print("Share File incomplete.")
 
 # ROUTE HANDLERS
 def uploadFileHandler():
@@ -50,21 +54,31 @@ def uploadFileHandler():
 		flash('Error: ', str(exc))
 	return redirect('/')
 
-def downloadFile(path):
+def downloadFileHandler(path):
 	user = validateAuth()
 	if user is None:
 		return redirect('/login')
 
 	return Response(downloadBlob(path), mimetype='application/octet-stream')
 
+def shareFileHandler(path):
+	user = validateAuth()
+	if user is None:
+		return redirect('/login')
+
+	try:
+		shareFile(path)
+	except ValueError as exc:
+		flash('Error: ', str(exc))
+
 def deleteFileHandler(path):
 	user = validateAuth()
 	if user is None:
 		return redirect('/login')
-	else:
-		try:
-			deleteFile(path)
-		except ValueError as exc:
-			flash('Error: ', str(exc))
+
+	try:
+		deleteFile(path)
+	except ValueError as exc:
+		flash('Error: ', str(exc))
 
 	return redirect('/')

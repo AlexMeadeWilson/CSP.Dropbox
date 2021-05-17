@@ -12,9 +12,17 @@ from app.login.auth_validator import validateAuth
 
 def setRoutes(app):
     app.route('/login', methods=['GET'])(login)
+    app.route('/logout', methods=['GET'])(logout)
 
 def login():
     user = validateAuth()
+    if user is not None:
+        return redirect('/')
+
+    return render_template('login.html')
+
+def logout():
+    user = None
     if user is not None:
         return redirect('/')
 
