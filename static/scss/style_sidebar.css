@@ -8265,7 +8265,10 @@ h1, h2, h3, h4, h5,
     display: block;
     width: 120px;
     height: 120px;
-    margin: 0 auto; }
+    margin: 0 auto;
+    background-image: url(../images/sunset_storage_logo.png);
+    background-color: #f8b739;
+  }
     #sidebar .logo span {
       display: block; }
   #sidebar ul.components {

@@ -40,7 +40,6 @@ def validateAuth():
             if user_info == None:
                 createUserInfo(claims)
                 user_info = retrieveUserInfo(claims)
-            print(user_info)
             return user_info
 
         except ValueError as exc:
