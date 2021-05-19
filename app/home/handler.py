@@ -33,10 +33,11 @@ def home():
     try:
         blob_list = blobList(None)
         for i in blob_list:
-            if i.name[len(i.name) - 1] == '/':
-                directory_list.append(i)
-            else:
-                file_list.append(i)
+            if user['uid'] in i.name:
+                if i.name[len(i.name) - 1] == '/':
+                    directory_list.append(i)
+                else:
+                    file_list.append(i)
 
     except ValueError as exc:
         flash('Error: ', str(exc))

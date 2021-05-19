@@ -8,6 +8,8 @@ from flask import Flask, render_template, request, redirect, Response, flash
 from google.auth.transport import requests
 from google.cloud import datastore, storage
 import local_constants
+import datetime
+import uuid
 
 datastore_client = datastore.Client()
 firebase_request_adapter = requests.Request()
@@ -21,8 +23,11 @@ def createUserInfo(claims):
 	entity_key = datastore_client.key('UserInfo', claims['email'])
 	entity = datastore.Entity(key=entity_key)
 	entity.update({
-		'email': claims['email'],
-		'name': claims['name']
+        'uid': str(uuid.uuid4()),
+        'email': claims['email'],
+		'name': claims['name'],
+        'picture': claims['picture'],
+        'created': datetime.datetime.utcnow()
 	})
 	datastore_client.put(entity)
 
@@ -40,6 +45,7 @@ def validateAuth():
             if user_info == None:
                 createUserInfo(claims)
                 user_info = retrieveUserInfo(claims)
+            print(user_info)
             return user_info
 
         except ValueError as exc:

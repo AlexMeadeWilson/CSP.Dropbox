@@ -7,7 +7,7 @@ window.addEventListener('load', function() {
 
 	var uiConfig = {
 		signInSuccessUrl: '/home',
-		signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID, firebase.auth.EmailAuthProvider.PROVIDER_ID]
+		signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID]
 	}; // uiConfig
 
 	firebase.auth().onAuthStateChanged(function(user) {
@@ -15,10 +15,10 @@ window.addEventListener('load', function() {
 
 			// hide the sign-out button and login-info
 			document.getElementById('sign-out').hidden = false;
-			document.getElementById('login-info').hidden = false;
+			// document.getElementById('login-info').hidden = false;
 
 			// Print to the Console Logs
-			console.log('Signed in as ${user.displayName} (${user.email})');
+			// console.log('Signed in as ${user.displayName} (${user.email})');
 
 			// Set the cookie as the token
 			user.getIdToken().then(function(token) {

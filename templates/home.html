@@ -30,7 +30,7 @@
       <nav id="sidebar">
         <div class="p-4 pt-5">
           <h3 style="color: #f8b739; text-align: center;">Sunset Storage</h3>
-          <a href="/home" class="img logo rounded-circle mb-5"></a>
+          <a href="/home"><img src="{{ user['picture'] }}" class="img logo rounded-circle mb-5" /></a>
           <p style="text-align: center; margin-top: -2rem;">{{ user['name'] }}<br />{{ user['email'] }}<br /></p>
           <ul class="list-unstyled components mb-5">
             <li class="active"><a href="home.html">Home</a></li>
@@ -38,7 +38,9 @@
               <a href="#allFilesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">All Directories</a>
               <ul class="collapse list-unstyled" id="allFilesSubmenu">
                 {% for i in directory_list %}
-                <li><a href="#">{{ i.name }}</a></li>
+                <li>
+                  <a href="#">{{ i.name.replace(user['uid'], '') }}</a>
+                </li>
                 {% endfor %}
               </ul>
             </li>
@@ -86,7 +88,18 @@
         </nav>
 
         <!-- Main Page Content -->
-        <h2 class="mb-4">Directory: {{ directory_list[0].name }}</h2>
+
+        <!-- Delete Directory -->
+        <form class="form-inline mb-1" action="/delete_directory/{{ directory_list[0].name }}" method="post">
+
+          <button type="submit" class="btn btn-danger" {% if directory_list[0].name.replace(user['uid'], '')=='/' %}disabled{% elif directory_list[0].name %}{% endif %}>
+            <i class="fas fa-trash fa-large" title="Delete"></i>  Delete
+          </button>&nbsp
+
+          <h2 class="mb-1" style="margin: 0;">This Directory: {{ directory_list[0].name.replace(user['uid'], '') }}</h2>&nbsp
+
+        </form>
+
         <p>The above mentioned directory, contains the following Sub-Directories and Files.
           <br />Click on the icons to Download, Share or Delete these Files and Sub-Directories individually.
           <br />You can also move the files between directories using the below controls.
@@ -126,7 +139,6 @@
                     </td>
                     <td style="text-align: left;">
                       <button type="submit" class="btn btn-primary mb-2">Upload</button>
-<!--                      <input type="submit" value="Upload" name="button" class="btn btn-primary mb-2" />-->
                     </td>
                     </form>
                     <!-- Upload File Form Ends -->
@@ -153,7 +165,7 @@
                   {% for i in file_list %}
                   <tr>
                     <td><i class="fas fa-file fa-large" title="File"></i></td>
-                    <td>{{ i.name }}</td>
+                    <td>{{ i.name.replace(user['uid'], '') }}</td>
                     <td>{{ i.size }} KB</td>
                     <td>{{ i.updated.strftime("%d %B %Y, %H:%M") }}</td>
                     <td> <!-- Download Button -->
@@ -165,8 +177,8 @@
                     </td>
                     <td> <!-- Share Button -->
                       <form action="/share_file/{{ i.name }}" method="post">
-                        <button type="submit" class="btn btn-secondary btn-sm">
-                          <i class="fas fa-share-square fa-large" title="Share"></i>
+                        <button type="submit" class="btn btn-secondary btn-sm" disabled>
+                          <i class="fas fa-share-square fa-large" title="Share (Disabled)"></i>
                         </button>
                       </form>
                     </td>

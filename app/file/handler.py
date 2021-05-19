@@ -16,10 +16,10 @@ def setRoutes(app):
 	app.route('/share_file/<path:path>', methods=['POST'])(shareFileHandler)
 	app.route('/delete_file/<path:path>', methods=['POST'])(deleteFileHandler)
 
-def addFile(file):
+def addFile(user, file):
 	storage_client = storage.Client(project=local_constants.PROJECT_NAME)
 	bucket = storage_client.bucket(local_constants.PROJECT_STORAGE_BUCKET)
-	blob = bucket.blob(file.filename)
+	blob = bucket.blob(user['uid'] + file.filename)
 	blob.upload_from_file(file)
 
 def downloadBlob(filename):
@@ -49,7 +49,7 @@ def uploadFileHandler():
 		file = request.files['file_name']
 		if file.filename == '':
 			return redirect('/')
-		addFile(file)
+		addFile(user, file)
 	except ValueError as exc:
 		flash('Error: ', str(exc))
 	return redirect('/')
