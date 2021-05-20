@@ -33,13 +33,13 @@
           <a href="/home"><img src="{{ user['picture'] }}" class="img logo rounded-circle mb-5" /></a>
           <p style="text-align: center; margin-top: -2rem;">{{ user['name'] }}<br />{{ user['email'] }}<br /></p>
           <ul class="list-unstyled components mb-5">
-            <li class="active"><a href="home.html">Home</a></li>
+            <li><a href="/home">All Directories</a></li>
 	          <li>
-              <a href="#allFilesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">All Directories</a>
+              <a href="#allFilesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{% if prefix=='' %}root/{% elif prefix %}{{ prefix }}{% endif %}</a>
               <ul class="collapse list-unstyled" id="allFilesSubmenu">
                 {% for i in directory_list %}
                 <li>
-                  <a href="#">{{ i.name.replace(user['uid'], '') }}</a>
+                  <a href="/home/{{ i.name }}">{{ i.name }}</a>
                 </li>
                 {% endfor %}
               </ul>
@@ -80,7 +80,7 @@
             <!-- <h1> Sunset Storage </h1> -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item active"><a class="nav-link" href="/home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/home">All Directories</a></li>
                 <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
               </ul>
             </div>
@@ -90,15 +90,7 @@
         <!-- Main Page Content -->
 
         <!-- Delete Directory -->
-        <form class="form-inline mb-1" action="/delete_directory/{{ directory_list[0].name }}" method="post">
-
-          <button type="submit" class="btn btn-danger" {% if directory_list[0].name.replace(user['uid'], '')=='/' %}disabled{% elif directory_list[0].name %}{% endif %}>
-            <i class="fas fa-trash fa-large" title="Delete"></i>  Delete
-          </button>&nbsp
-
-          <h2 class="mb-1" style="margin: 0;">This Directory: {{ directory_list[0].name.replace(user['uid'], '') }}</h2>&nbsp
-
-        </form>
+        <h2 class="mb-1" style="margin: 0;">Directory: {% if prefix=='' %}root/{% elif prefix %}{{ prefix }}{% endif %}</h2>
 
         <p>The above mentioned directory, contains the following Sub-Directories and Files.
           <br />Click on the icons to Download, Share or Delete these Files and Sub-Directories individually.
@@ -109,51 +101,45 @@
         <div class="container" style="padding: 0rem; float: left;">
           <div class="row">
             <div class="col-12">
-              <table class="table table-bordered table-hover">
+              <table class="table table-bordered table-hover" style="max-width: 100%;">
                 <thead class="thead-dark">
-                  <!-- Button Row -->
+                  <!-- ACTION BAR ROW: CREATE DIRECTORY OR UPLOAD FILE -->
                   <tr>
                     <td style="color: #6c757d;"><i class="fas fa-folder-open fa-3x" title="Directory"></i></td>
 
-                    <!-- Add New Directory Form Starts -->
-                    <form action="/add_directory" method="post" class="form-inline" style="float: left;">
+                    <!-- ADD NEW DIRECTORY FORM BEGINS -->
+                    <form action="/add_directory/{{ prefix }}" method="post" class="form-inline" style="float: left;">
                     <td>
                       <div class="form-group mx-sm-3 mb-2">
                         <label for="dir_name" class="sr-only">Create New Directory Label</label>
-                        <input type="text" class="form-control" style="width: 15rem; min-width: 10rem; max-width: 15rem;" id="dir_name" name="dir_name" placeholder="Sub_Directory/">
+                        <input type="text" class="form-control" style="width: 15rem; min-width: 10rem; max-width: 100%;" id="dir_name" name="dir_name" placeholder="Sub_Directory_Name/">
                       </div>
                     </td>
                     <td style="text-align: left;">
                       <button type="submit" class="btn btn-secondary mb-2">Create</button>
                     </td>
                     </form>
-                    <!-- Add New Directory Form Ends -->
+                    <!-- ADD NEW DIRECTORY FORM ENDS -->
 
-                    <!-- Upload File Form Starts -->
-                    <form action="/upload_file" method="post" enctype="multipart/form-data">
+                    <!-- UPLOAD FILE FORM BEGINS -->
+                    <form action="/upload_file/{{ prefix }}" method="post" enctype="multipart/form-data">
                     <td colspan="3" style="text-align: left;">
                       <div class="form-group mx-sm-3 mb-2">
                         <label for="file_name" class="sr-only">Select File for Upload</label>
-                        <input type="file" class="form-control" style="width: 20rem; min-width: 20rem; max-width: 20rem;" name="file_name" id="file_name" placeholder="File to Upload...">
+                        <input type="file" class="form-control" style="width: 20rem; min-width: 20rem; max-width: 100%;" name="file_name" id="file_name" placeholder="File to Upload...">
                       </div>
                     </td>
                     <td style="text-align: left;">
                       <button type="submit" class="btn btn-primary mb-2">Upload</button>
                     </td>
                     </form>
-                    <!-- Upload File Form Ends -->
+                    <!-- UPLOAD FILE FORM ENDS -->
 
                   </tr>
-                  <!-- Directory Table Header -->
+                  <!-- DIRECTORY AND FILE LIST HEADER -->
                   <tr>
-                    <!-- <th scope="col">
-                      <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheckAll">
-                        <label class="custom-control-label" for="customCheckAll"></label>
-                    </div>
-                    </th> -->
                     <th scope="col">Type</i></th>
-                    <th scope="col">Name</th>
+                    <th scope="col">Sub-Directory or File Name</th>
                     <th scope="col">Size</th>
                     <th scope="col">Created</th>
                     <th scope="col">Download</th>
@@ -162,27 +148,53 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <!-- DIRECTORY LIST STARTS -->
+                  {% for i in directory_list %}
+                  <tr>
+                    <td> <!-- PREVIOUS DIRECTORY BUTTON -->
+                      <form action="/home/{{ i.name }}" method="post">
+                        <button type="submit" class="btn btn-primary btn-sm" {% if prefix=='' %}disabled{% elif prefix %}{% endif %}>
+                          <i class="fas fa-level-up-alt fa-large" title="Previous Directory"></i>
+                        </button>
+                      </form>
+                    </td>
+                    <td><a href="/home/{{ i.name }}">{{ i.name }}</a></td>
+                    <td>--</td>
+                    <td>{{ i.updated.strftime("%d %B %Y, %H:%M") }}</td>
+                    <td></td>
+                    <td></td>
+                    <td> <!-- DELETE BUTTON -->
+                      <form action="/delete_directory/{{ i.name }}" method="post">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                          <i class="fas fa-trash fa-large" title="Delete"></i>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  <!-- DIRECTORY LIST ENDS -->
+                  <!-- FILE LIST STARTS -->
                   {% for i in file_list %}
                   <tr>
-                    <td><i class="fas fa-file fa-large" title="File"></i></td>
-                    <td>{{ i.name.replace(user['uid'], '') }}</td>
+                    <td><i class="fas fa-file fa-2x" title="File"></i></td>
+                    <td>{{ i.name }}</td>
                     <td>{{ i.size }} KB</td>
                     <td>{{ i.updated.strftime("%d %B %Y, %H:%M") }}</td>
-                    <td> <!-- Download Button -->
+                    <td> <!-- DOWNLOAD BUTTON -->
                       <form action="/download_file/{{ i.name }}" method="post">
                         <button type="submit" class="btn btn-primary btn-sm">
                           <i class="fas fa-file-download fa-large" title="Download"></i>
                         </button>
                       </form>
                     </td>
-                    <td> <!-- Share Button -->
+                    <td> <!-- SHARE BUTTON -->
                       <form action="/share_file/{{ i.name }}" method="post">
                         <button type="submit" class="btn btn-secondary btn-sm" disabled>
                           <i class="fas fa-share-square fa-large" title="Share (Disabled)"></i>
                         </button>
                       </form>
                     </td>
-                    <td> <!-- Delete Button -->
+                    <td> <!-- DELETE BUTTON -->
                       <form action="/delete_file/{{ i.name }}" method="post">
                         <button type="submit" class="btn btn-danger btn-sm">
                           <i class="fas fa-trash fa-large" title="Delete"></i>
@@ -191,6 +203,7 @@
                     </td>
                   </tr>
                   {% endfor %}
+                <!-- FILE LIST ENDS -->
                 </tbody>
               </table>
             </div>
@@ -202,7 +215,7 @@
     {% elif error_message %}
     <p>Error Message: {{ error_message }}</p>
     {% endif %}
-    <!-- Page Scripts -->
+    <!-- PAGE SCRIPTS -->
     <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popper.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

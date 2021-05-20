@@ -44,13 +44,13 @@
                 <div class="text-center mb-5">
                   <img src="{{ url_for('static', filename='favicon/favicon.png') }}">
                   <h3><strong>Sunset Storage</strong></h3>
-                  <p class="mb-4" style="color: #1d1919">Login using your Gmail or Email Address.</p>
+                  <p class="mb-4" style="color: #1d1919">Please login using your Gmail Address.</p>
                 </div>
                 <!-- New Firebase Login Form begins -->
                 <div id="firebase-auth-container"></div>
                 <!-- New Firebase Login Form ends -->
 
-                <button id="sign-out" hidden="true">Sign out</button>
+                <button id="sign-out" hidden="true" type="button" class="btn btn-dark btn-lg btn-block">Log out</button>
                 <div id="login-info" hidden="true">
                   <h2>Login Info</h2>
                     {% if user %}
