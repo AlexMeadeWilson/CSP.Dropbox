@@ -4,7 +4,6 @@
 # Programming Assignment: Dropbox using GAE
 # ----------------------------------------------
 import os.path
-
 import google.oauth2.id_token
 from flask import Flask, render_template, request, redirect, Response, flash
 from google.auth.transport import requests
@@ -25,7 +24,7 @@ def blobList(prefix):
         return redirect('/login')
 
     storage_client = storage.Client(project=local_constants.PROJECT_NAME)
-    return storage_client.list_blobs(local_constants.PROJECT_STORAGE_BUCKET, prefix=prefix)
+    return storage_client.list_blobs(local_constants.PROJECT_STORAGE_BUCKET, prefix=prefix, delimiter='')
 
 def returnDirectory(path):
     user = validateAuth()
@@ -39,11 +38,11 @@ def returnDirectory(path):
     try:
         blob_list = blobList(prefix)
         for i in blob_list:
-            if i.name[len(i.name) - 1] == '/':
-                directory_list.append(i)
-            else:
-                file_list.append(i)
-
+            if user['uid'] in i.name:
+                if i.name[len(i.name) - 1] == '/':
+                    directory_list.append(i)
+                else:
+                    file_list.append(i)
 
     except ValueError as exc:
         flash('Error: ', str(exc))
@@ -63,10 +62,11 @@ def previousDirectory(path):
     try:
         blob_list = blobList(prefix)
         for i in blob_list:
-            if i.name[len(i.name) - 1] == '/':
-                directory_list.append(i)
-            else:
-                file_list.append(i)
+            if user['uid'] in i.name:
+                if i.name[len(i.name) - 1] == '/':
+                    directory_list.append(i)
+                else:
+                    file_list.append(i)
 
 
     except ValueError as exc:
@@ -86,10 +86,11 @@ def home():
     try:
         blob_list = blobList(prefix)
         for i in blob_list:
-            if i.name[len(i.name) - 1] == '/':
-                directory_list.append(i)
-            else:
-                file_list.append(i)
+            if user['uid'] in i.name:
+                if i.name[len(i.name) - 1] == '/':
+                    directory_list.append(i)
+                else:
+                    file_list.append(i)
 
     except ValueError as exc:
         flash('Error: ', str(exc))

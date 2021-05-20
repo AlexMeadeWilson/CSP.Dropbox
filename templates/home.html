@@ -35,11 +35,11 @@
           <ul class="list-unstyled components mb-5">
             <li><a href="/home">All Directories</a></li>
 	          <li>
-              <a href="#allFilesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{% if prefix=='' %}root/{% elif prefix %}{{ prefix }}{% endif %}</a>
+              <a href="#allFilesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{% if prefix=='' %}/{% elif prefix %}{{ prefix.replace(user['uid'], '') }}{% endif %}</a>
               <ul class="collapse list-unstyled" id="allFilesSubmenu">
                 {% for i in directory_list %}
                 <li>
-                  <a href="/home/{{ i.name }}">{{ i.name }}</a>
+                  <a href="/home/{{ i.name }}">{{ i.name.replace(user['uid'], '') }}</a>
                 </li>
                 {% endfor %}
               </ul>
@@ -55,7 +55,7 @@
               <span style="color: #f8b739">Module:</span> Cloud Services & Platforms<br />
               <span style="color: #f8b739">Module Code:</span> BSCH-CSP/Dub/PT<br />
               <span style="color: #f8b739">Assignment:</span> "Dropbox" with GAE<br />
-              <span style="color: #f8b739">Date:</span> 21st May 2021
+              <span style="color: #f8b739">Submitted:</span> May 2021
             </p>
             <p style="padding-top: 10rem;">Copyright &copy; <script>document.write(new Date().getFullYear());</script> All rights reserved
               <br /><a href="https://moodle.griffith.ie/user/profile.php?id=3415" target="_blank">Alex Meade Wilson.</a>
@@ -90,7 +90,7 @@
         <!-- Main Page Content -->
 
         <!-- Delete Directory -->
-        <h2 class="mb-1" style="margin: 0;">Directory: {% if prefix=='' %}root/{% elif prefix %}{{ prefix }}{% endif %}</h2>
+        <h2 class="mb-1" style="margin: 0;">Directory: {% if prefix=='' %}/{% elif prefix %}{{ prefix.replace(user['uid'], '') }}{% endif %}</h2>
 
         <p>The above mentioned directory, contains the following Sub-Directories and Files.
           <br />Click on the icons to Download, Share or Delete these Files and Sub-Directories individually.
@@ -158,7 +158,7 @@
                         </button>
                       </form>
                     </td>
-                    <td><a href="/home/{{ i.name }}">{{ i.name }}</a></td>
+                    <td><a href="/home/{{ i.name }}">{{ i.name.replace(user['uid'], '') }}</a></td>
                     <td>--</td>
                     <td>{{ i.updated.strftime("%d %B %Y, %H:%M") }}</td>
                     <td></td>
@@ -177,7 +177,7 @@
                   {% for i in file_list %}
                   <tr>
                     <td><i class="fas fa-file fa-2x" title="File"></i></td>
-                    <td>{{ i.name }}</td>
+                    <td>{{ i.name.replace(user['uid'], '') }}</td>
                     <td>{{ i.size }} KB</td>
                     <td>{{ i.updated.strftime("%d %B %Y, %H:%M") }}</td>
                     <td> <!-- DOWNLOAD BUTTON -->

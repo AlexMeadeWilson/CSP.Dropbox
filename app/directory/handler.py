@@ -49,7 +49,7 @@ def createRootHandler():
 	if user is None:
 		return redirect('/login')
 	try:
-		root = 'rootDir/'
+		root = user['uid'] + '/'
 		addDirectory(root)
 
 	except ValueError as exc:
@@ -78,7 +78,7 @@ def addDirectoryNoPrefixHandler():
 		return redirect('/login')
 
 	try:
-		directory_name = request.form['dir_name']
+		directory_name = user['uid'] + request.form['dir_name']
 		if directory_name == '' or directory_name[len(directory_name) - 1] != '/':
 			return redirect('/')
 		createDirectoryModel(directory_name)

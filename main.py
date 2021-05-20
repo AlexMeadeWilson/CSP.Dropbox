@@ -13,7 +13,6 @@ import app.home.handler as homeHandler
 import app.directory.handler as directoryHandler
 import app.file.handler as fileHandler
 import app.file_shared.handler as file_sharedHandler
-import app.error.handler as errorHandler
 
 app = Flask(__name__)
 app.config.update(TESTING=True, SECRET_KEY=b'_5#y2L"F4Q8z\n\xec]/')
@@ -26,7 +25,6 @@ homeHandler.setRoutes(app)
 directoryHandler.setRoutes(app)
 fileHandler.setRoutes(app)
 file_sharedHandler.setRoutes(app)
-errorHandler.setRoutes(app)
 
 if __name__ == '__main__':
 	app.run(host='127.0.0.1', port=8080, debug=True)

@@ -67,7 +67,7 @@ def uploadFileNoPrefixHandler():
 	if user is None:
 		return redirect('/login')
 
-	prefix = ''
+	prefix = user['uid']
 	try:
 		file = request.files['file_name']
 		if file.filename == '':

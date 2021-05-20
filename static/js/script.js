@@ -1,3 +1,8 @@
+// ----------------------------------------------
+// BSCH-CSP/Dub/PT: Cloud Services and Platforms
+// Student: Alex Meade Wilson (2950871)
+// Programming Assignment: Dropbox using GAE
+// ----------------------------------------------
 'use strict';
 window.addEventListener('load', function() {
 		document.getElementById('sign-out').onclick = function() {
@@ -15,10 +20,6 @@ window.addEventListener('load', function() {
 
 			// hide the sign-out button and login-info
 			document.getElementById('sign-out').hidden = false;
-			// document.getElementById('login-info').hidden = false;
-
-			// Print to the Console Logs
-			// console.log('Signed in as ${user.displayName} (${user.email})');
 
 			// Set the cookie as the token
 			user.getIdToken().then(function(token) {
