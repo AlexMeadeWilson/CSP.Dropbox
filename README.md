@@ -46,7 +46,7 @@ _To install and run this application locally, please follow these simple steps._
 
 ### How to use this Application
 - To understand the UI, and how to use this Application;
-- Refer to the embedded documentation found here: [2950871_AlexMeadeWilson_CSP_Assignment_Document.docx](docs/2950871_AlexMeadeWilson_CSP_Assignment_Document.docx).
+- Refer to the embedded documentation found here: [2950871_AlexMeadeWilson_CSP_Assignment_Document.pdf](docs/2950871_AlexMeadeWilson_CSP_Assignment_Document.pdf).
 
 _Thank you, and enjoy "Sunset Storage"._
 _Alex Meade Wilson._
