@@ -31,8 +31,8 @@ _To install and run this application locally, please follow these simple steps._
 - You can download PyCharm from here: [https://www.jetbrains.com/pycharm/download/](https://www.jetbrains.com/pycharm/download/)
 
 #####Command Line Installation Steps
-- Clone this GitHub repository into a local directory.
-- Open up a Command Line Editor like cmd, cmder, or Google Cloud SDK Shell.
+- Clone this GitHub repository into a local Virtual Environment directory.
+- Open up the Google Cloud SDK Shell Command Line editor.
 - Navigate to the local Project directory and Scripts sub: `cd ../CSP.Dropbox/venv/Scripts`
 - Type `activate` to start the Python Virtual Environment.
 - Once the venv has activated, you should see a command line prefix of `(venv)`
