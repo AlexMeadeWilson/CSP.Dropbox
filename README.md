@@ -39,7 +39,7 @@ _To install and run this application locally, please follow these simple steps._
 - Navigate back to the Project root directory CSP.Dropbox directory: `cd ../CSP.Dropbox/`.
 - You now need to install the necessary libraries to run this application.
 - To do this, from the Project root directory again, type: `pip install -r requirements.txt`.
-- Next, set the GOOGLE APPLICATION CREDENTIALS: `set GOOGLE_APPLICATION_CREDENTIALS=creds/amw-csp-dropbox-4372ed7880d9.json`
+- Next, set the GOOGLE APPLICATION CREDENTIALS: `set GOOGLE_APPLICATION_CREDENTIALS=<YOUR_SERVICE_ACCOUNT_KEY>.json`
 - Once set, type: `python main.py` to run the main Python application. 
 - This should begin running a local instance of the Application and Web Service
 - In your browser, go to `http://localhost:8080/` or `http://127.0.0.1:8080/`
